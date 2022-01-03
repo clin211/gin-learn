@@ -8,6 +8,7 @@
     <title>{{.title}}</title>
 </head>
 <body>
+    {{ template "public/header.html" .}}
     <h2>this is home page</h2>
     <!-- 如果数据重新赋值给变量则必须使用$开头 -->
     {{ $title := .title }}
@@ -15,9 +16,13 @@
 
     <ul>
         {{ range $key, $value := .data}}
-        <li>{{$key}}  {{$value}}</li>
-        {{end}}
+        <li>{{$key}}--{{$value}}</li>
+        {{ end }}
     </ul>
+
+    <h4>{{.title}} 的长度: {{len .title}}</h4>
+    <p>{{.time}}</p>
+    <p>{{ UnixToTime .time }}</p>
 </body>
 </html>
 {{ end }}

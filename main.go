@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"html/template"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,9 +14,20 @@ type News struct {
 	Content string
 }
 
+// 时间戳转换日期
+func UnixToTime(timestamp int) string {
+	t := time.Unix(int64(timestamp), 0)
+	fmt.Print(t)
+	return t.Format("2006-01-02 15:04:05")
+}
+
 func main() {
 
 	r := gin.Default()
+	// 自定义模板函数
+	r.SetFuncMap(template.FuncMap{
+		"UnixToTime": UnixToTime,
+	})
 	r.LoadHTMLGlob("pages/**/*")
 
 	// layout
@@ -56,9 +70,11 @@ func main() {
 
 	// default
 	r.GET("/default", func(c *gin.Context) {
+		fmt.Print(UnixToTime(int(time.Now().Unix())))
 		c.HTML(http.StatusOK, "default/index.html", gin.H{
 			"title": "default home",
-			"data": []string{"javascript", "node", "vue", "react", "next", "nuxt", "react-native", "flutter"},
+			"data":  []string{"javascript", "node", "vue", "react", "next", "nuxt", "react-native", "flutter"},
+			"time":  1641204239, //int64(time.Now().Unix()),
 		})
 	})
 
