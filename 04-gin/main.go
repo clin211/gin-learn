@@ -1,11 +1,22 @@
 package main
 
 import (
+	"encoding/xml"
 	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
+
+type Userinfo struct {
+	Username string `json:"username" form:"username" binding:"required"`
+	Email    string `json:"email" form:"email" binding:"required"`
+}
+
+type Article struct {
+	Title   string `json:"title" xml:"title" binding:"required"`
+	Content string `json:"content" xml:"content" binding:"required"`
+}
 
 func main() {
 	r := gin.Default()
@@ -50,5 +61,53 @@ func main() {
 		})
 	})
 
+	// 获取GET POST传递的数据绑定到结构体上
+	r.GET("/get-user", func(c *gin.Context) {
+		user := &Userinfo{}
+		err := c.ShouldBind(&user)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+		} else {
+			c.JSON(http.StatusOK, user)
+		}
+	})
+
+	r.POST("/add", func(c *gin.Context) {
+		user := &Userinfo{}
+
+		if err := c.ShouldBind(&user); err == nil {
+			c.JSON(http.StatusOK, user)
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"err": err.Error(),
+			})
+		}
+	})
+
+	// 获取post xml数据
+	r.POST("/xml", func(c *gin.Context) {
+		xmlSliceData, _ := c.GetRawData() // 获取c.Request.Body
+
+		article := &Article{}
+
+		if err := xml.Unmarshal(xmlSliceData, &article); err == nil {
+			c.JSON(http.StatusOK, article)
+		} else {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"error": err.Error(),
+			})
+		}
+	})
+
+	// 动态路由传值
+	r.GET("/detail/:id", func(c *gin.Context) {
+		id := c.Param("id")
+
+		c.JSON(http.StatusOK, gin.H{
+			"id": id,
+		})
+	})
 	r.Run(":9090")
 }
