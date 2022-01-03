@@ -12,7 +12,7 @@ type News struct {
 }
 
 func main() {
-	
+
 	r := gin.Default()
 	r.LoadHTMLGlob("pages/**/*")
 
@@ -54,10 +54,11 @@ func main() {
 		})
 	})
 
-	// admin
+	// default
 	r.GET("/default", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "default/index.html", gin.H{
 			"title": "default home",
+			"data": []string{"javascript", "node", "vue", "react", "next", "nuxt", "react-native", "flutter"},
 		})
 	})
 

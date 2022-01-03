@@ -9,6 +9,15 @@
 </head>
 <body>
     <h2>this is home page</h2>
+    <!-- 如果数据重新赋值给变量则必须使用$开头 -->
+    {{ $title := .title }}
+    <h4>this is title: {{ $title }}</h4>
+
+    <ul>
+        {{ range $key, $value := .data}}
+        <li>{{$key}}  {{$value}}</li>
+        {{end}}
+    </ul>
 </body>
 </html>
 {{ end }}
