@@ -5,9 +5,11 @@ go 1.17 // 设置go版本
 require github.com/gin-gonic/gin v1.8.1
 
 require (
+	github.com/astaxie/beego v1.12.3 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18 // indirect
 	github.com/unknwon/com v1.0.1 // indirect
 )
 
