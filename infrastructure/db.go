@@ -20,9 +20,8 @@ func NewDatabase() Database {
 	HOST := os.Getenv("DB_HOST")
 	DBNAME := os.Getenv("DB_NAME")
 
-	URL := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", USER, PASS,
-		HOST, DBNAME)
-	fmt.Println(URL)
+	URL := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", USER, PASS, HOST, DBNAME)
+	fmt.Printf("URL %s\n", URL)
 	db, err := gorm.Open(mysql.Open(URL))
 
 	if err != nil {
