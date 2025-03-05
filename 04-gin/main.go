@@ -53,7 +53,7 @@ func main() {
 		c.JSON(http.StatusOK, gin.H{
 			"code":    http.StatusOK,
 			"message": "ok",
-			"dsata": map[string]interface{}{
+			"data": map[string]interface{}{
 				"username": username,
 				"email":    email,
 				"hobby":    hobby,
