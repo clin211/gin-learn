@@ -1,4 +1,4 @@
-package upload
+package files
 
 import (
 	"os"
@@ -7,7 +7,7 @@ import (
 )
 
 // Delete 通过文件名删除文件（先不考虑同名文件）
-func (u *FileUploader) Delete(c *gin.Context) {
+func (u *Files) Delete(c *gin.Context) {
 	// 获取文件名
 	fileName := c.Query("filename")
 

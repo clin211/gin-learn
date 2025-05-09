@@ -1,4 +1,4 @@
-package upload
+package files
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (u *FileUploader) File(c *gin.Context) {
+func (u *Files) File(c *gin.Context) {
 	file, err := c.FormFile("file")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "文件未上传"})

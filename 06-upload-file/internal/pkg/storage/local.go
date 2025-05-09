@@ -60,6 +60,26 @@ func (s *LocalStorage) Save(fileHeader *multipart.FileHeader, dstPath string) er
 	return err
 }
 
+// SaveFromBytes 将字节数据保存为文件
+// 参数:
+//   - data: 要保存的字节数据
+//   - dstPath: 目标存储路径（相对于BasePath的路径）
+//
+// 返回值:
+//   - error: 如果保存过程中发生错误，返回相应的错误信息；否则返回nil
+func (s *LocalStorage) SaveFromBytes(data []byte, dstPath string) error {
+	// 构建完整的文件存储路径
+	fullPath := filepath.Join(s.BasePath, dstPath)
+
+	// 创建必要的目录结构
+	if err := os.MkdirAll(filepath.Dir(fullPath), 0755); err != nil {
+		return err
+	}
+
+	// 创建并写入文件
+	return os.WriteFile(fullPath, data, 0644)
+}
+
 // GetURL 获取已存储文件的访问URL
 // 参数:
 //   - objectKey: 文件的唯一标识符/路径
@@ -71,6 +91,20 @@ func (s *LocalStorage) GetURL(objectKey string) (string, error) {
 	// 本地存储无法直接生成公网访问URL
 	// 返回一个相对路径，需要配合Web服务器（如Nginx）提供静态文件服务
 	return "/static/" + objectKey, nil
+}
+
+// GetURLWithFilename 获取已存储文件的访问URL，并指定下载时的文件名
+// 参数:
+//   - objectKey: 文件的唯一标识符/路径
+//   - filename: 下载时显示的文件名
+//
+// 返回值:
+//   - string: 文件的访问URL（本地存储通常返回相对路径）
+//   - error: 如果生成URL过程中发生错误，返回相应的错误信息；否则返回nil
+func (s *LocalStorage) GetURLWithFilename(objectKey string, filename string) (string, error) {
+	// 生成访问URL（在前端下载时将使用指定的文件名）
+	// 这里我们添加一个查询参数，这个参数会在处理下载请求时被使用
+	return "/static/" + objectKey + "?filename=" + filename, nil
 }
 
 // Delete 从本地文件系统中删除指定文件

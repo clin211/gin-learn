@@ -1,4 +1,4 @@
-package upload
+package files
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 )
 
 // 获取文件访问地址（支持 MinIO 对象存储）
-func (u *FileUploader) GetFileURL(c *gin.Context) {
+func (u *Files) GetFileURL(c *gin.Context) {
 	// 获取文件名
 	fileName := c.Query("filename")
 

@@ -5,7 +5,9 @@ go 1.24.2
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0
+	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/spf13/viper v1.20.1
+	golang.org/x/image v0.15.0
 )
 
 require (

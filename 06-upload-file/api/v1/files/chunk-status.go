@@ -1,9 +1,9 @@
-package upload
+package files
 
 import "github.com/gin-gonic/gin"
 
 // 查询分片上传状态（可选，用于断点续传）
-func (u *FileUploader) ChunkStatus(c *gin.Context) {
+func (u *Files) ChunkStatus(c *gin.Context) {
 	// 获取文件名
 	fileName := c.Query("filename")
 
