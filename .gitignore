@@ -572,3 +572,5 @@ MigrationBackup/
 
 # End of https://www.toptal.com/developers/gitignore/api/go,macos,node,vs,vim
 /**/*/tmp
+./07-gorm/mysql
+./08-gorm-gen/README.md
